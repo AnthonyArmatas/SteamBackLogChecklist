@@ -1,0 +1,85 @@
+html, body {
+   margin:0;
+   padding:0;
+   height:100%; /* Sets the html, body to 100% to help make the footer stay at the bottom */
+   background-color: #003c92;
+}
+
+h3{
+	text-align: center;
+	color:#fff;
+}
+
+.loginText{
+	color: #d2e5ff;
+	position:relative;/*The relative position moves the p within its box  */
+	top: 35px;	/*Keep the same value as p to move up or down togeather  */
+}
+
+#wrapper {
+	position:relative;	
+	min-height:100%;
+}
+
+.header{
+	border-bottom: 2px solid;
+	border-bottom-right-radius:5px;
+}
+#loginHeader{
+	border-bottom-color: #C0C0C0;
+	color:#fff;					/* changes the color of the text*/
+	background-color: #0047ab; 	/*changes the color of the background*/
+}
+
+#loginPage{
+	position:relative;
+	top: 20px;	
+	border: 2px solid #C0C0C0;
+	margin: 5px auto;
+	border-radius: 5px;
+	padding : 10px 20px;
+	padding-bottom: 18%;
+	min-width: 500px;
+    max-width: 840px;	
+	min-height: 550px;
+	background-color: #00275f;
+
+}
+
+#steamButton{
+	position:relative;
+	top: 100px;
+	padding-left: 45%;
+	padding-top: 20%;
+}
+
+
+#footer{
+	/*margin-top: 6.5%;*/
+	border-top: 1px solid #C0C0C0;
+	border-top-right-radius: 5px;
+	background-color: #0047ab;
+	color:#fff;	
+	position:absolute; /*The absolute position and the bottom work together  */
+	bottom: 0;
+	width: 100%;
+	text-align:left;
+
+}
+#homeHeader{
+	/*for some reason, having inline here as opposed to the h2, will break it*/
+	width: 100%;
+	color:#fff;					/* changes the color of the text*/
+	background-color: #2e4f7d; 	/*changes the color of the background*/
+}
+#logoutButtonHeader{
+	display: inline;
+	float: right;
+	padding-top: 10px;
+
+}
+
+
+
+
+/**/
