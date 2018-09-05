@@ -14,7 +14,6 @@ An easy to find link so I can view it locally on my browser
   -->
 
 <?php
-	include_once 'includes/dbh.php';
 	require 'steamauth/steamauth.php';
 	//require 'steamauth/userInfo.php';
 ?>

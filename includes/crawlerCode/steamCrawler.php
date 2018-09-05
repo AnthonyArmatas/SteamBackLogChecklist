@@ -1,7 +1,8 @@
 <?php
 	include 'getGameList.php';
 	include 'addInfoToGames.php';
-	ini_set('max_execution_time', 6030);
+	include 'checkForAgeOrMatureGate.php';
+	ini_set('max_execution_time', 432000);
 
 	//Set up the database in the steamCrawler.php file so I do not have to initialize it in every file
 	$dbServername = 'dynastinae.cxf3o3gwu9no.us-east-2.rds.amazonaws.com';
@@ -21,18 +22,21 @@
 	//echo '<br/>';
 
 	$gamesWorkedThrough = 0;
-	for($curGame = 0; $curGame < 603 /*count($arrayOfTags)*/; $curGame++ ){
+	for($curGame = 0; $curGame < count($arrayOfTags); $curGame++ ){
 		print_r("games Worked Through: " . $gamesWorkedThrough);
 		echo '<br/>';	
 		$appid = $arrayOfTags[$curGame]['appid'];	
 		$url = "https://store.steampowered.com/app/$appid";
-		$gamePageUrl = file_get_contents($url);
-		//Pulls all of the info from the page and adds it to the DB
-		getTagsOnPage($db,$gamePageUrl,$appid);
-		getLanguagesOnPage($db,$gamePageUrl,$appid);
-		getSystemsOnPage($db,$gamePageUrl,$appid);
-		getDetailsOnPage($db,$gamePageUrl,$appid);
-		getVRDetailsOnPage($db,$gamePageUrl,$appid);
+		//Checks for an age or mature gate as well as
+		//Pulls all of the info from the page and adds it to the DB		
+		$url = checkForAgeOrMatureGate($url);
+		//print_r($url);
+
+		getTagsOnPage($db,$url,$appid);
+		getLanguagesOnPage($db,$url,$appid);
+		getSystemsOnPage($db,$url,$appid);
+		getDetailsOnPage($db,$url,$appid);
+		getVRDetailsOnPage($db,$url,$appid);
 		$gamesWorkedThrough++;
 	}
 

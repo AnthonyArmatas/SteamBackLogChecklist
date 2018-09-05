@@ -8,14 +8,15 @@ $tempUrl = "https://store.steampowered.com/search/?sort_by=Name_ASC&tags=$tagid&
 $steamUrl = file_get_contents($tempUrl);
 $tagsRegex = '/<a href=\"https:\/\/store\.steampowered\.com\/app\/(\d+)\/(\w+)\/([a-zA-Z0-9?=_]+)\"/';
 
-preg_match_all($tagsRegex, $steamUrl, $idMatches);
+//preg_match_all($tagsRegex, $steamUrl, $idMatches);
 
 //Prints out the appid
 //print_r($idMatches[1]);
 //Prints out the appname
 ////For PDO
 //$gameLink = 'https://store.steampowered.com/app/?';
-$gameLink = 'https://store.steampowered.com/app/' . $idMatches[1][0];
+//$gameLink = 'https://store.steampowered.com/app/' . $idMatches[1][0];
+$gameLink = 'https://store.steampowered.com/app/570'; // 330840 | 414700 
 //print_r($gameLink);
 
 $gamePageContents = file_get_contents($gameLink);
@@ -24,8 +25,10 @@ $gamePageContents = file_get_contents($gameLink);
 /////////////////////////////////////////////////////////////////////////////////////////////
 $regexNoEndSpace = '/<a href=\"https:\/\/store\.steampowered\.com\/tags\/en\/([a-zA-Z0-9\%\.\_\-]+)\/\?snr=1_5_9__409\"\sclass\=\"app_tag"\sstyle\=\"([\w\:\s;]+)?\">\s*\t*([a-zA-Z0-9\'\.\/_&amp;\-]+\s?[a-zA-Z0-9\'\.\/_&amp;\-]+\s?[a-zA-Z0-9\'\.\/_&amp;-]+)\s+<\/a>/';
 preg_match_all($regexNoEndSpace, $gamePageContents, $idMatches);
-//print_r($idMatches);
-//print_r($idMatches[3][0]);
+
+print_r($gamePageContents);
+print_r($idMatches);
+print_r($idMatches[3][0]);
 /*
 ----------------------------------------------------------------------------------------------
 ---Group three idMatches[3] is the array with tag names. idMatches[3][0] gets the string------
@@ -73,7 +76,7 @@ preg_match_all($regexLanguages, $gamePageDetailContents, $LanguageMatches);
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 $regexSystems = '/<div\sclass\=\"[a-zA-Z0-9\s_\-]+\"\s+data-os\=\"[a-zA-Z0-9]+\">\s+([a-zA-Z0-9\'\.\/_&amp;\-]+\s?[a-zA-Z0-9\'\.\/_&amp;\-\+]+\s?[a-zA-Z0-9\'\.\/_&amp;-]+)\s+<\/div>/';
-preg_match_all($regexSystems, $gamePageDetailContents, $regexSystemsMatches);
-print_r($regexSystemsMatches);
+//preg_match_all($regexSystems, $gamePageDetailContents, $regexSystemsMatches);
+//print_r($regexSystemsMatches);
 
 //print_r($gamePageDetailContents);
