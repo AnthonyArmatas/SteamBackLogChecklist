@@ -1,46 +1,38 @@
 <?php
-if (empty($_SESSION['steam_uptodate']) or empty($_SESSION['steam_personaname'])) {
+    if(!isset($_SESSION)) 
+    { 
+        session_start();
+      	ini_set('max_execution_time', 300);
+   
+    } 
+
 	require 'SteamConfig.php';
-	$url = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=".$steamauth['apikey']."&steamids=".$_SESSION['steamid']."&format=json&include_appinfo=1&include_played_free_games=1"); 
+	$url = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=".$steamauth['apikey']."&steamid=".$_SESSION['steamid']."&format=json&include_appinfo=1&include_played_free_games=1"); 
 	$content = json_decode($url, true);
-	$_SESSION['steam_gamescount'] = $content['response']['game_count'];	
-	$_SESSION['steam_appid'] = $content['response']['players'][0]['steamid'];
-	$_SESSION['steam_communityvisibilitystate'] = $content['response']['players'][0]['communityvisibilitystate'];
-	$_SESSION['steam_profilestate'] = $content['response']['players'][0]['profilestate'];
-	$_SESSION['steam_personaname'] = $content['response']['players'][0]['personaname'];
-	$_SESSION['steam_lastlogoff'] = $content['response']['players'][0]['lastlogoff'];
-	$_SESSION['steam_profileurl'] = $content['response']['players'][0]['profileurl'];
-	$_SESSION['steam_avatar'] = $content['response']['players'][0]['avatar'];
-	$_SESSION['steam_avatarmedium'] = $content['response']['players'][0]['avatarmedium'];
-	$_SESSION['steam_avatarfull'] = $content['response']['players'][0]['avatarfull'];
-	$_SESSION['steam_personastate'] = $content['response']['players'][0]['personastate'];
-	if (isset($content['response']['players'][0]['realname'])) { 
-		   $_SESSION['steam_realname'] = $content['response']['players'][0]['realname'];
-	   } else {
-		   $_SESSION['steam_realname'] = "Real name not given";
+	$_SESSION['steam_ownedgamenum'] = $content['response']['game_count'];
+	$_SESSION['steam_test'] = $content['response']['games'];
+	
+	for($curOwnedGame = 0; $curOwnedGame < $_SESSION['steam_ownedgamenum']; $curOwnedGame++){
+		$_SESSION['steam_appid'][$curOwnedGame] =  $content['response']['games'][$curOwnedGame]['appid'];
+		$_SESSION['steam_name'][$curOwnedGame] =  $content['response']['games'][$curOwnedGame]['name'];
+		$_SESSION['steam_playtime_forever'][$curOwnedGame] =  $content['response']['games'][$curOwnedGame]['playtime_forever'];
+		$_SESSION['steam_img_icon_url'][$curOwnedGame] =  $content['response']['games'][$curOwnedGame]['img_icon_url'];
+		$_SESSION['steam_img_logo_url'][$curOwnedGame] =  $content['response']['games'][$curOwnedGame]['img_logo_url'];
 	}
-	$_SESSION['steam_primaryclanid'] = $content['response']['players'][0]['primaryclanid'];
-	$_SESSION['steam_timecreated'] = $content['response']['players'][0]['timecreated'];
-	$_SESSION['steam_uptodate'] = time();
+
+for($curGame = 0; $curGame < $_SESSION['steam_ownedgamenum']; $curGame++){
+	$steamgameinfo['appid'][$curGame] = $_SESSION['steam_appid'][$curGame];
+	$steamgameinfo['name'][$curGame] = $_SESSION['steam_name'][$curGame];
+	$steamgameinfo['playtimeinsec'][$curGame] = $_SESSION['steam_playtime_forever'][$curGame];
+	$steamgameinfo['img_icon_url'][$curGame] = $_SESSION['steam_img_icon_url'][$curGame];
+	$steamgameinfo['img_logo_url'][$curGame] = $_SESSION['steam_img_logo_url'][$curGame];
 }
+	$steamgameinfo['curShownGames'] = $steamgameinfo['appid'];
+	
 
-$steamprofile['steamid'] = $_SESSION['steam_steamid'];
-$steamprofile['communityvisibilitystate'] = $_SESSION['steam_communityvisibilitystate'];
-$steamprofile['profilestate'] = $_SESSION['steam_profilestate'];
-$steamprofile['personaname'] = $_SESSION['steam_personaname'];
-$steamprofile['lastlogoff'] = $_SESSION['steam_lastlogoff'];
-$steamprofile['profileurl'] = $_SESSION['steam_profileurl'];
-$steamprofile['avatar'] = $_SESSION['steam_avatar'];
-$steamprofile['avatarmedium'] = $_SESSION['steam_avatarmedium'];
-$steamprofile['avatarfull'] = $_SESSION['steam_avatarfull'];
-$steamprofile['personastate'] = $_SESSION['steam_personastate'];
-$steamprofile['realname'] = $_SESSION['steam_realname'];
-$steamprofile['primaryclanid'] = $_SESSION['steam_primaryclanid'];
-$steamprofile['timecreated'] = $_SESSION['steam_timecreated'];
-$steamprofile['uptodate'] = $_SESSION['steam_uptodate'];
 
+//https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=###&steamid=76561198013422592&format=json&include_appinfo=1&include_played_free_games=1 -->
 ?>
 
 
 
-<!-- https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=###&steamid=76561198013422592&format=json&include_appinfo=1&include_played_free_games=1 -->

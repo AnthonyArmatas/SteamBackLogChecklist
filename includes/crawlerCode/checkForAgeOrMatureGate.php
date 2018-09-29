@@ -1,6 +1,25 @@
 <?php
 
-		function checkForAgeOrMatureGate($url){
+		function checkForAgeOrMatureGate($url,$appname){
+
+		//Sets a break condition if:
+		//The 'game' has the word trailer at the end of its name (this is to save time and database space adding most of the trailers to the tables)
+		$regexAppNameCheck = '/([a-zA-Z0-9\s\/\-\&\'\:\.]*Trailer\s?\(?[a-zA-Z0-9]*?\)?)/';
+		preg_match_all($regexAppNameCheck, $appname, $regNameMatche);
+		echo '<br/>';			
+		if(!empty($regNameMatche[0])){
+			return "breakCondition";
+		} else{
+			//if a 'game' redirects to the steam home.
+			$urlHeaderInfo = get_headers($url);				
+			if($urlHeaderInfo[6] == "Location: https://store.steampowered.com/"){
+				return "breakCondition";
+			}
+
+		}
+		//print_r($http_response_header[6]);
+		echo '<br/>';			
+
 		$context = stream_context_create(
     	array(
         	"http" => array(
@@ -12,21 +31,19 @@
 		//Setting this to a variable in case it has no check.
 		//We can just return the file_get_contents of the url and we wont have to call it from the steamCrawler.php
 		$passedUrl = file_get_contents($url,false,$context);
+		
 		//print_r($http_response_header[6]);	
 		$regexisAgeCheck = '/Location: https:\/\/store\.steampowered\.com\/agecheck\/app\/[0-9]+\/?/';
-		$regexisMatureCheck = '/Location: https:\/\/store\.steampowered\.com\/app\/[0-9]+\/agecheck/';
-
 		preg_match_all($regexisAgeCheck, $http_response_header[6], $regAgeMatches);
-		preg_match_all($regexisMatureCheck, $http_response_header[6], $regMatMatches);		
 		if(!empty($regAgeMatches[0])){
 			//print_r('Age Match Not Empty');
 			//echo '<br/>';
 			//This is a remennt from an attempt to use curl to change the submit an age through the page 
-			/*$postData = array(
+			$postData = array(
 				'ageDay' => '31',
 				'ageMonth' => 'July',
 				'ageYear' => '1993'
-			);*/
+			);
 			//Instead of submission I create a cookie which allows the crawler to walk enter the pages without hitting the redirect
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -43,7 +60,11 @@
 			curl_close($ch);
 			//The results are are like file_get_contents but from beyond the redirect
 			return $results;
-		}else if(!empty($regMatMatches[0])){
+		}else {
+
+			$regexisMatureCheck = '/Location: https:\/\/store\.steampowered\.com\/app\/[0-9]+\/agecheck/';
+			preg_match_all($regexisMatureCheck, $http_response_header[6], $regMatMatches);			
+			if(!empty($regMatMatches[0])){
 			//print_r('Mature Match Not Empty');
 			//echo '<br/>';
 			$ch = curl_init();
@@ -59,8 +80,9 @@
 			curl_close($ch);
 			//The results are are like file_get_contents but from beyond the redirect
 			return $results;
-		} else{
-			return $passedUrl;
-		}		
+			} else {
+				return $passedUrl;
+			}		
 
+		}
 	}

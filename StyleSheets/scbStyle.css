@@ -2,14 +2,24 @@ html, body {
    margin:0;
    padding:0;
    height:100%; /* Sets the html, body to 100% to help make the footer stay at the bottom */
-   background-color: #003c92;
+   background-color: #1b2a3a;
 }
-
+h2{
+	text-align: center;
+	color:#fff;
+}
 h3{
 	text-align: center;
 	color:#fff;
 }
 
+p{
+	color:#FEFEFE;
+}
+img.DehumidifierLogo{
+	width: 25%;
+    height: 60px;
+}
 .loginText{
 	color: #d2e5ff;
 	position:relative;/*The relative position moves the p within its box  */
@@ -28,29 +38,28 @@ h3{
 #loginHeader{
 	border-bottom-color: #C0C0C0;
 	color:#fff;					/* changes the color of the text*/
-	background-color: #0047ab; 	/*changes the color of the background*/
+	background-color: #31465c; 	/*changes the color of the background*/
 }
 
-#loginPage{
+#loginContiner{
 	position:relative;
 	top: 20px;	
 	border: 2px solid #C0C0C0;
 	margin: 5px auto;
 	border-radius: 5px;
 	padding : 10px 20px;
-	padding-bottom: 18%;
 	min-width: 500px;
     max-width: 840px;	
 	min-height: 550px;
-	background-color: #00275f;
+	background-color: #171a1d;
 
 }
 
 #steamButton{
 	position:relative;
-	top: 100px;
+	top: 90px;
 	padding-left: 45%;
-	padding-top: 20%;
+	padding-top: 5%;
 }
 
 
@@ -58,9 +67,9 @@ h3{
 	/*margin-top: 6.5%;*/
 	border-top: 1px solid #C0C0C0;
 	border-top-right-radius: 5px;
-	background-color: #0047ab;
+	background-color: #31465c;
 	color:#fff;	
-	position:absolute; /*The absolute position and the bottom work together  */
+	position:fixed; /*The absolute position and the bottom work together // It was absolute but fixed keeps it at the bottom of the screen  */
 	bottom: 0;
 	width: 100%;
 	text-align:left;
@@ -70,16 +79,175 @@ h3{
 	/*for some reason, having inline here as opposed to the h2, will break it*/
 	width: 100%;
 	color:#fff;					/* changes the color of the text*/
-	background-color: #2e4f7d; 	/*changes the color of the background*/
+	background-color: #31465c; 	/*changes the color of the background*/
 }
 #logoutButtonHeader{
 	display: inline;
 	float: right;
-	padding-top: 10px;
+	padding-top: 15px;
+
+}
+#userimageAvatar{
+	display: inline;
+	float: right;
+}
+
+
+#upperSectionLogin{
+	padding-bottom: 25%;
+
+}
+#lowerSectionLogin{
+
+}
+span{
+	color:#d2e5ff;
 
 }
 
 
+/*///////////////////////////////LoginPage Specific/////////////////////////////////////////////////////////*/
 
+li.ownedgamelistitem{
+	border:			2px solid #C0C0C0;
+	border-radius:	5px;
+	margin-right:	5px;
+	min-width:		500px;
+}
+ul.games{
+	max-height:	95%;
+	min-width:		500px;	
+  	overflow:	hidden;
+  	overflow-y:	scroll;
+	margin-right:	30px;  	
+}
+h3.sectionHeader{
+	color:#FEFEFE;
+}
+p.tags{
+	font-size: 12px;
+	float:left;
+	position:	relative;
+}
+p.gameName{
+	margin: 2px 0px 5px 0px;
+}
+.body{
+	min-width:	450px;
+	min-height: 110px;
+	position:	relative;
+}
+
+.buttEnabled{
+	background-color: #4CAF50; /* Green */
+	color: white;
+}
+.buttNegated{
+	background-color: #f44336; /* Red */
+	color: white;
+}
+#gameDisplayContainer{
+	position:	relative;
+	top:		20px;	
+	border:		1px solid #C0C0C0;
+	margin:		5px auto;
+	border-radius:	5px;
+	/*padding : 10px 20px;  I am replacing this inner padding, which gives a space between gameDisplayContainer and both #ownedGamesDisplayContainer and #gameFilterDisplayContainer, 
+	and adding it to the inner margins. */ 
+	padding-bottom:	37%;
+	min-width:	50px;
+    max-width:	1800px;	
+	min-height:	500px;
+	background-color:	#171a1d;
+}
+#ownedGamesDisplayContainer{
+	position:	absolute; /* The absolute position makes it positioned relative to its nearest parent div, #gameDisplayContainer */
+	float:	left;
+	height:	100%;
+	width:	50%;	
+	border-right:	2px solid #C0C0C0;
+}
+
+#gameFilterDisplayContainer{
+	position:	relative;
+	float:	right;
+	min-width:	50px;
+	height:	100%;
+	width:	50%;
+}
+#FilterContainer{
+	position:	relative;
+  	overflow:	hidden;
+  	overflow-y:	auto;
+	min-width:	100px;
+	min-height:	350px;
+	height:		600px;
+	margin: 	10px;
+
+}
+#tagFilterContainer,#detailFilterContainer,#vrdetailsFilterContainer,#systemFilterContainer,#languagesFilterContainer{
+	margin: 10px;
+
+}
+
+/*<!-- CheckList CSS -->	
+<!--////////////////////////////////////////////-->*/
+input[type='checkbox']{
+  width: 30px !important;
+  height: 30px !important;
+  margin: 5px 40px 20px 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance:none;
+  outline: 2px solid silver;
+  box-shadow: none;
+  font-size: 2em;
+  float:right;
+
+}
+input[type='checkbox']:checked {
+	background-color:green;
+}
+.completedCheck{
+	height: 100%;
+	margin-bottom: : 20px;
+	min-height: 90px;
+	right: 0;
+	left: 10;
+	float: right;
+	position: relative;
+
+}
+
+#completedCheckPara{
+	text-align: center;
+	margin: 2px 0px 15px 0px;
+}
+#completedPercentageContainer{
+	position:	relative;
+	top:		20px;	
+	border:		1px solid #C0C0C0;
+	margin:		5px auto;
+	border-radius:	5px;
+	min-width:	50px;
+    max-width:	1800px;
+    min-height:	60px;
+}
+#completedPercentageNumber{
+	text-align: center;
+}
+#completedPercentageBar{
+	width:0%;
+	height:60px;
+	background-color:#007bac; /*Logo Blue*/
+}
+/*<!-- Loading Bar CSS -->	
+<!--////////////////////////////////////////////-->*/
+
+
+
+/*
+<!--////////////////////////////////////////////-->*/
 
 /**/
